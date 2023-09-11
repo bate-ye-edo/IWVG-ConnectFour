@@ -1,0 +1,44 @@
+@startuml
+
+
+class ConnectFour
+class Player
+class Board
+class Goal
+class Token
+class Turn
+class Horizontal
+class Vertical
+class Diagonal
+class Color
+class Square
+class Red
+class Yellow
+class PutAction
+class Column
+
+ConnectFour  *-down-> Board 
+ConnectFour  *-down-> "2" Player
+ConnectFour *-down-> Turn
+Turn -down-> "2" Player
+Board *-down-> "6" Column
+Square o--> "0..1" Token
+Player  *-down-> "21" Token
+Player *-down-> Color
+Player --> Board
+Token *-down-> "1" Color
+Column *--> "7" Square 
+Color <|-- Red
+Color <|-- Yellow
+Goal <|-- Horizontal
+Goal <|-- Vertical
+Goal <|-- Diagonal
+
+
+Player o--> Goal
+Goal ..> PutAction
+Goal ..> "1..4" Column
+PutAction .right.> Token
+PutAction ..> Column
+
+@enduml
