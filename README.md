@@ -2,4 +2,4 @@
 Connect Four console app for IWVG of Web Engineering Master
 
 ## Modelo de dominio
-![](docs/out/DomainModel.svg)
+![Vocabulary](./ConnectFour/docs/out/DomainModel.svg)
