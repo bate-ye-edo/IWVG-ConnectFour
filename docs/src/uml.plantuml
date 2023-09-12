@@ -1,0 +1,69 @@
+@startuml
+
+
+class ConnectFour{
+  - Board board;
+  - Turn turn;
+  + ConnectFour();
+  + GameStart();
+  - PlayGame();
+  + GameHasFinished()
+}
+class Turn{
+  - static const int PLAYERS_NUMBER;
+  - Player players[PLAYERS_NUMBER];
+  - int currentPlayer;
+  + Turn(Board)
+  + void ChangeTurn();
+  + void WriteActivePlayer();
+  + void Play();
+}
+class Player{
+  - static const int TOKENS_NUMBER;
+  - Token tokens[];
+  - Board board;
+  + Player(Token, Board);
+  - PutToken();
+  + Play();
+  + WritePlayer();
+}
+class Board{
+  - Token[][] tokens;
+  + Board();
+  - void InitializeBoardTokens();
+  + void PutToken(Token, int columnNumber);
+  - bool CanInsertIntoColumn(int columnNumber);
+  - int GetFirstEmptyRowInColumn(int columnNumber);
+  - bool IsHorizontalConnectedFour();
+  - bool CheckRowHasConnectedFour(int row, int column);
+  - bool IsVerticalConnectedFour();
+  - bool CheckColumnHasConnectedFour(int row, int column);
+  - bool IsDiagonalConnectedFour();
+  - bool CheckDiagonalHasConnectedFour(int row, int column);
+  - bool IsInvertedDiagonalConnectedFour();
+  - bool CheckInvertedDiagonalHasConnectedFour(int row, int column);
+  + bool IsConnectedFour();
+  + bool IsBoardComplete();
+}
+class BoardConstant{
+  # const int BOARD_COLUMNS;
+  # const int BOARD_ROWS;
+  # const int WIN_NUMBER;
+  # const int MAX_COLUMN_TO_CHECK;
+  # const int MAX_ROW_TO_CHECK;
+}
+enum Token{
+  + RED;
+  + YELLOW;
+}
+
+ConnectFour  *-down-> Board 
+ConnectFour *-down-> Turn
+Turn -down-> "2" Player
+Turn .down.> Token
+Player  *-down-> "21" Token
+Player --> Board
+Board ..>Token
+Board ..>BoardConstant
+
+@enduml
