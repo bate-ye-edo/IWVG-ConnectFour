@@ -45,12 +45,12 @@ class Board{
   + bool IsConnectedFour();
   + bool IsBoardComplete();
 }
-class BoardConstant{
-  # const int BOARD_COLUMNS;
-  # const int BOARD_ROWS;
-  # const int WIN_NUMBER;
-  # const int MAX_COLUMN_TO_CHECK;
-  # const int MAX_ROW_TO_CHECK;
+static class BoardConstant{
+  ~ const int BOARD_COLUMNS;
+  ~ const int BOARD_ROWS;
+  ~ const int WIN_NUMBER;
+  ~ const int MAX_COLUMN_TO_CHECK;
+  ~ const int MAX_ROW_TO_CHECK;
 }
 enum Token{
   + RED;
