@@ -28,9 +28,8 @@ namespace ConnectFour
 
         public void PutToken(Token token, int column)
         {
-            column--;
             int emptyRow = this.GetFirstEmptyRowInColumn(column);
-            this.tokens[emptyRow][column] = token;
+            this.tokens[emptyRow][column - 1] = token;
         }
 
         public bool CanInsertIntoColumn(int column)
