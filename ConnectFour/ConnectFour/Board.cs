@@ -6,7 +6,7 @@ namespace ConnectFour
 {
     class Board
     {
-        public Token[,] tokens;
+        public Token[][] tokens;
 
         public Board()
         {
@@ -15,20 +15,22 @@ namespace ConnectFour
 
         private void InitializeBoardTokens()
         {
-            this.tokens = new Token[BoardConstant.BOARD_COLUMNS, BoardConstant.BOARD_ROWS];
-            for (int column = 0; column < BoardConstant.BOARD_COLUMNS; column++)
+            this.tokens = new Token[BoardConstant.BOARD_ROWS][];
+            for (int row = 0; row < BoardConstant.BOARD_ROWS; row++)
             {
-                for (int row = 0; row < BoardConstant.BOARD_ROWS; row++)
+                this.tokens[row] = new Token[BoardConstant.BOARD_COLUMNS];
+                for (int column = 0; column < BoardConstant.BOARD_COLUMNS; column++)
                 {
-                    this.tokens[column, row] = Token.NULL;
+                    this.tokens[row][column] = Token.NULL;
                 }
             }
         }
 
         public void PutToken(Token token, int column)
         {
+            column--;
             int emptyRow = this.GetFirstEmptyRowInColumn(column);
-            this.tokens[emptyRow, column - 1] = token;
+            this.tokens[emptyRow][column] = token;
         }
 
         public bool CanInsertIntoColumn(int column)
@@ -46,7 +48,7 @@ namespace ConnectFour
         {
             for (int row = 0; row < BoardConstant.BOARD_ROWS; row++)
             {
-                if (this.tokens[column, row] == Token.NULL)
+                if (this.tokens[row][column - 1] == Token.NULL)
                 {
                     return row;
                 }
@@ -66,14 +68,14 @@ namespace ConnectFour
 
         private bool CheckRowHasConnectedFour(int row)
         {
-            Token referenceToken = this.tokens[0, row];
+            Token referenceToken = this.tokens[row][0];
             for (int column = 1, goal = 0; column < BoardConstant.BOARD_COLUMNS - 1; column++, goal++)
             {
                 if (goal == BoardConstant.WIN_NUMBER)
                 {
                     return true;
                 }
-                Token currentToken = this.tokens[column, row];
+                Token currentToken = this.tokens[row][column];
                 if (referenceToken == Token.NULL || referenceToken != currentToken)
                 {
                     referenceToken = currentToken;
@@ -95,14 +97,14 @@ namespace ConnectFour
 
         private bool CheckColumnHasConnectedFour(int column)
         {
-            Token referenceToken = this.tokens[column, 0];
+            Token referenceToken = this.tokens[0][column];
             for (int row = 1, goal = 0; row < BoardConstant.BOARD_ROWS - 1; row++, goal++)
             {
                 if (goal == BoardConstant.WIN_NUMBER)
                 {
                     return true;
                 }
-                Token currentToken = this.tokens[column, row];
+                Token currentToken = this.tokens[row][column];
                 if (referenceToken == Token.NULL || referenceToken != currentToken)
                 {
                     referenceToken = currentToken;
@@ -125,14 +127,14 @@ namespace ConnectFour
         public bool CheckDiagonalHasConnectedFour(int column)
         {
             int row = column;
-            Token referenceToken = this.tokens[column, row];
+            Token referenceToken = this.tokens[row][column];
             for (int goal = 0; column < BoardConstant.BOARD_COLUMNS - 1; column++, row++)
             {
                 if (goal == BoardConstant.WIN_NUMBER)
                 {
                     return true;
                 }
-                Token currentToken = this.tokens[column, row];
+                Token currentToken = this.tokens[row][column];
                 if (referenceToken == Token.NULL || referenceToken != currentToken)
                 {
                     referenceToken = currentToken;
@@ -145,14 +147,14 @@ namespace ConnectFour
         public bool CheckInvertedDiagonalHasConnectedFour(int column)
         {
             int row = BoardConstant.BOARD_ROWS - 1;
-            Token referenceToken = this.tokens[column, row];
+            Token referenceToken = this.tokens[row][column];
             for (int goal = 0; column < BoardConstant.BOARD_COLUMNS - 1; column++, row--)
             {
                 if (goal == BoardConstant.WIN_NUMBER)
                 {
                     return true;
                 }
-                Token currentToken = this.tokens[column, row];
+                Token currentToken = this.tokens[column][row];
                 if (referenceToken == Token.NULL || referenceToken != currentToken)
                 {
                     referenceToken = currentToken;
@@ -176,7 +178,7 @@ namespace ConnectFour
             {
                 for (int column = 0; column < BoardConstant.BOARD_COLUMNS; column++)
                 {
-                    if (this.tokens[row, column] == Token.NULL)
+                    if (this.tokens[row][column] == Token.NULL)
                     {
                         return false;
                     }
@@ -184,15 +186,14 @@ namespace ConnectFour
             }
             return true;
         }
-        
+
         public void PrintBoard()
         {
-            for (int row = BoardConstant.BOARD_ROWS - 1; row >= 0; row--)
+            for (int row = tokens.Length - 1; row >= 0; row--)
             {
                 for (int column = 0; column < BoardConstant.BOARD_COLUMNS; column++)
                 {
-                    Console.Write($"[{(char)tokens[column, row]}]");
-
+                    Console.Write($"[{(char)tokens[row][column]}]");
                 }
                 Console.Write("\n");
             }
