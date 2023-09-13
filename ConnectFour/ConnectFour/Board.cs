@@ -26,17 +26,10 @@ namespace ConnectFour
         }
         public void PutToken(Token token, int columnNumber)
         {
-            if (this.CanInsertIntoColumn(columnNumber))
-            {
-                int emptyRow = this.GetFirstEmptyRowInColumn(columnNumber);
-                this.tokens[emptyRow][columnNumber - 1] = token;
-            }
-            else
-            {
-                Console.WriteLine("The column is complete, please insert into other column");
-            }
+            int emptyRow = this.GetFirstEmptyRowInColumn(columnNumber);
+            this.tokens[emptyRow][columnNumber - 1] = token;
         }
-        private bool CanInsertIntoColumn(int columnNumber)
+        internal bool CanInsertIntoColumn(int columnNumber)
         {
             if(columnNumber > BoardConstant.BOARD_COLUMNS || columnNumber < 0)
             {
@@ -160,7 +153,7 @@ namespace ConnectFour
             }
             return isEqualToFirstToken;
         }
-        private bool IsConnectedFour()
+        public bool IsConnectedFour()
         {
             return IsHorizontalConnectedFour() || IsVerticalConnectedFour() || IsDiagonalConnectedFour() || IsInvertedDiagonalConnectedFour();
         }
@@ -178,6 +171,17 @@ namespace ConnectFour
                 }
             }
             return boardComplete;
+        }
+        public void PrintBoard()
+        {
+            for(int row = 0; row < tokens.Length; row++)
+            {
+                for(int column = 0; column < tokens[row].Length; column++)
+                {
+                    Console.Write($"[{(char)tokens[row][column]}]");
+                }
+                Console.Write("\n");
+            }
         }
     }
 }
