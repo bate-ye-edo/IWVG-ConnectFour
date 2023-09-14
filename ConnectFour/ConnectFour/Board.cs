@@ -45,7 +45,7 @@ namespace ConnectFour
 
         private int GetFirstEmptyRowInColumn(int column)
         {
-            for (int row = 0; row < BoardConstant.BOARD_ROWS; row++)
+            for (int row = BoardConstant.BOARD_ROWS-1; row >= 0; row--)
             {
                 if (this.tokens[row][column - 1] == Token.NULL)
                 {
@@ -123,7 +123,7 @@ namespace ConnectFour
             return hasConnectedFour;
         }
 
-        public bool CheckDiagonalHasConnectedFour(int column)
+        private bool CheckDiagonalHasConnectedFour(int column)
         {
             int row = column;
             Token referenceToken = this.tokens[row][column];
@@ -143,7 +143,7 @@ namespace ConnectFour
             return false;
         }
 
-        public bool CheckInvertedDiagonalHasConnectedFour(int column)
+        private bool CheckInvertedDiagonalHasConnectedFour(int column)
         {
             int row = BoardConstant.BOARD_ROWS - 1;
             Token referenceToken = this.tokens[row][column];
