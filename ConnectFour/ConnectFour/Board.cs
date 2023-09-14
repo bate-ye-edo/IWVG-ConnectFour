@@ -45,7 +45,7 @@ namespace ConnectFour
 
         private int GetFirstEmptyRowInColumn(int column)
         {
-            for (int row = BoardConstant.BOARD_ROWS-1; row >= 0; row--)
+            for (int row = 0; row < BoardConstant.BOARD_ROWS; row++)
             {
                 if (this.tokens[row][column - 1] == Token.NULL)
                 {
@@ -58,7 +58,7 @@ namespace ConnectFour
         private bool IsHorizontalConnectedFour()
         {
             bool hasConnectedFour = false;
-            for (int row = 0; !hasConnectedFour && row < BoardConstant.BOARD_ROWS - 1; row++)
+            for (int row = 0; !hasConnectedFour && row < BoardConstant.BOARD_ROWS; row++)
             {
                 hasConnectedFour = CheckRowHasConnectedFour(row);
             }
@@ -68,7 +68,7 @@ namespace ConnectFour
         private bool CheckRowHasConnectedFour(int row)
         {
             Token referenceToken = this.tokens[row][0];
-            for (int column = 1, goal = 0; column < BoardConstant.BOARD_COLUMNS - 1; column++, goal++)
+            for (int column = 1, goal = 1; column < BoardConstant.BOARD_COLUMNS; column++, goal++)
             {
                 if (goal == BoardConstant.WIN_NUMBER)
                 {
@@ -87,7 +87,7 @@ namespace ConnectFour
         private bool IsVerticalConnectedFour()
         {
             bool hasConnectedFour = false;
-            for (int column = 0; !hasConnectedFour && column < BoardConstant.BOARD_COLUMNS - 1; column++)
+            for (int column = 0; !hasConnectedFour && column < BoardConstant.BOARD_COLUMNS; column++)
             {
                 hasConnectedFour = CheckColumnHasConnectedFour(column);
             }
@@ -97,7 +97,7 @@ namespace ConnectFour
         private bool CheckColumnHasConnectedFour(int column)
         {
             Token referenceToken = this.tokens[0][column];
-            for (int row = 1, goal = 0; row < BoardConstant.BOARD_ROWS - 1; row++, goal++)
+            for (int row = 1, goal = 1; row < BoardConstant.BOARD_ROWS; row++, goal++)
             {
                 if (goal == BoardConstant.WIN_NUMBER)
                 {
@@ -113,62 +113,89 @@ namespace ConnectFour
             return false;
         }
 
-        public bool IsDiagonalConnectedFour(Func<int, bool> checkFunction)
+        private bool IsDiagonalConnectedFour(Token token)
         {
-            bool hasConnectedFour = false;
-            for (int column = 0; !hasConnectedFour && column < BoardConstant.BOARD_COLUMNS - 1; column++)
-            {
-                hasConnectedFour = checkFunction(column);
-            }
-            return hasConnectedFour;
+            return CheckBottomLeftToTopRight(token) || CheckBottomRightToTopLeft(token) ||
+                    CheckTopLeftToBottomRight(token) || CheckTopRightToBottomLeft(token); 
         }
 
-        private bool CheckDiagonalHasConnectedFour(int column)
+        private bool CheckBottomLeftToTopRight(Token token)
         {
-            int row = column;
-            Token referenceToken = this.tokens[row][column];
-            for (int goal = 0; column < BoardConstant.BOARD_COLUMNS - 1; column++, row++)
+            for (int row = 0; row <= BoardConstant.BOARD_ROWS - 4; row++)
             {
-                if (goal == BoardConstant.WIN_NUMBER)
+                for (int column = 0; column <= BoardConstant.BOARD_COLUMNS - 4; column++)
                 {
-                    return true;
-                }
-                Token currentToken = this.tokens[row][column];
-                if (referenceToken == Token.NULL || referenceToken != currentToken)
-                {
-                    referenceToken = currentToken;
-                    goal = 0;
+                    if (this.tokens[row][column] == token &&
+                        this.tokens[row + 1][column + 1] == token &&
+                        this.tokens[row + 2][column + 2] == token &&
+                        this.tokens[row + 3][column + 3] == token)
+                    {
+                        return true;
+                    }
                 }
             }
             return false;
         }
 
-        private bool CheckInvertedDiagonalHasConnectedFour(int column)
+        private bool CheckBottomRightToTopLeft(Token token)
         {
-            int row = BoardConstant.BOARD_ROWS - 1;
-            Token referenceToken = this.tokens[row][column];
-            for (int goal = 0; column < BoardConstant.BOARD_COLUMNS - 1; column++, row--)
+            for (int row = 0; row <= BoardConstant.BOARD_ROWS - 4; row++)
             {
-                if (goal == BoardConstant.WIN_NUMBER)
+                for (int column = 3; column < BoardConstant.BOARD_COLUMNS; column++)
                 {
-                    return true;
-                }
-                Token currentToken = this.tokens[column][row];
-                if (referenceToken == Token.NULL || referenceToken != currentToken)
-                {
-                    referenceToken = currentToken;
-                    goal = 0;
+                    if (this.tokens[row][column] == token &&
+                        this.tokens[row + 1][column - 1] == token &&
+                        this.tokens[row + 2][column - 2] == token &&
+                        this.tokens[row + 3][column - 3] == token)
+                    {
+                        return true;
+                    }
                 }
             }
             return false;
         }
 
-        public bool IsConnectedFour()
+        private bool CheckTopLeftToBottomRight(Token token)
+        {
+            for (int row = 3; row < BoardConstant.BOARD_ROWS; row++)
+            {
+                for (int column = 0; column <= BoardConstant.BOARD_COLUMNS - 4; column++)
+                {
+                    if (this.tokens[row][column] == token &&
+                        this.tokens[row - 1][column + 1] == token &&
+                        this.tokens[row - 2][column + 2] == token &&
+                        this.tokens[row - 3][column + 3] == token)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        private bool CheckTopRightToBottomLeft(Token token)
+        {
+            for (int row = 3; row < BoardConstant.BOARD_ROWS; row++)
+            {
+                for (int column = 3; column < BoardConstant.BOARD_COLUMNS; column++)
+                {
+                    if (this.tokens[row][column] == token &&
+                        this.tokens[row - 1][column - 1] == token &&
+                        this.tokens[row - 2][column - 2] == token &&
+                        this.tokens[row - 3][column - 3] == token)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+    
+        public bool IsConnectedFour(Token token)
         {
             return IsHorizontalConnectedFour() ||
                    IsVerticalConnectedFour() ||
-                   IsDiagonalConnectedFour(CheckDiagonalHasConnectedFour) ||
-                   IsDiagonalConnectedFour(CheckInvertedDiagonalHasConnectedFour);
+                   IsDiagonalConnectedFour(token);
         }
 
         public bool IsBoardComplete()
@@ -188,7 +215,7 @@ namespace ConnectFour
 
         public void PrintBoard()
         {
-            for (int row = tokens.Length - 1; row >= 0; row--)
+            for (int row = BoardConstant.BOARD_ROWS - 1; row >= 0; row--)
             {
                 for (int column = 0; column < BoardConstant.BOARD_COLUMNS; column++)
                 {
