@@ -14,7 +14,7 @@ namespace ConnectFour
         }
         public void GameStart()
         {
-            Console.WriteLine("ConnectFour Game Started");
+            Message.WriteGameStarted();
             do
             {
                 this.PlayGame();
@@ -40,13 +40,13 @@ namespace ConnectFour
             if (this.board.IsConnectedFour())
             {
                 this.board.PrintBoard();
-                Console.WriteLine("The winner is: ");
+                Message.WriteWinnerTitle();
                 this.turn.WriteNonActivePlayer();
                 gameHasFinished = true;
             }else if (this.board.IsBoardComplete())
             {
                 this.board.PrintBoard();
-                Console.WriteLine("The game has ended with a tie");
+                Message.WriteGameTie();
                 gameHasFinished = true;
             }
             return gameHasFinished;

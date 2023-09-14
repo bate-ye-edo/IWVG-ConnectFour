@@ -39,7 +39,7 @@ namespace ConnectFour
         }
         public void Play()
         {
-            Console.WriteLine($"Player: {currentPlayer+1} with token: {(char)this.players[currentPlayer].token}");
+            Message.WritePlayerDescription(this.players[currentPlayer], currentPlayer+1);
             this.players[currentPlayer].Play();
         }
     }

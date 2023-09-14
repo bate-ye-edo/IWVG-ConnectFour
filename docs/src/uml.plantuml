@@ -64,6 +64,30 @@ enum Token{
 static class TokenMethod{
   ~ static Token GetTokenFromNumber(int number);
 }
+static class MessageConstant{
+  ~const string GAME_START;
+  ~ const string WINNER_TITLE;
+  ~ const string GAME_TIE;
+  ~ const string PLAYER_DESCRIPTION;
+  ~ const string PLAYER_NO_MORE_TOKENS;
+  ~ const string COLUMN_X_CAN_NOT_BE_USED;
+  ~ const string INSERT_COLUMN_NUMBER;
+  ~ const string INSERT_VALID_COLUMN_NUMBER;
+  ~ const string PLAYER_INFO;
+}
+static class Message{
+  - static void WriteLine(string str);
+  + static void WriteGameStarted();
+  + static void WriteWinnerTitle();
+  + static void WriteGameTie();
+  + static void WritePlayerDescription(Player player, int order);
+  + static void WritePlayerNoTokenLeft(Token token);
+  + static void WriteColumnCanNotBeUsed(int column);
+  + static void WriteInsertColumnNumber();
+  + static void WriteInsertValidColumnNumber();
+  + static void WritePlayer(Player player);
+  - static void WriteStringWithParams(string str, params object[] parameters);
+}
 ConnectFour  *-down-> Board 
 ConnectFour *-down-> Turn
 Turn -down-> "2" Player
@@ -75,4 +99,9 @@ Board ..>BoardConstant
 Player ..> PlayerConstant
 Turn ..> PlayerConstant
 Turn ..> TokenMethod
+Message ..> MessageConstant
+ConnectFour ..> Message
+Board ..> Message
+Turn ..> Message
+Player ..> Message
 @enduml

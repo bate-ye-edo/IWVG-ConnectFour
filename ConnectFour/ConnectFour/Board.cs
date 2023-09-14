@@ -33,7 +33,6 @@ namespace ConnectFour
         {
             if(columnNumber > BoardConstant.BOARD_COLUMNS || columnNumber < 0)
             {
-                Console.WriteLine("The column number is bigger than the maximum column number or smaller than 0");
                 return false;
             }
             int emptyRow = this.GetFirstEmptyRowInColumn(columnNumber);   

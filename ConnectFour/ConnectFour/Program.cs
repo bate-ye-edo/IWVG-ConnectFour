@@ -6,7 +6,7 @@ namespace ConnectFour
     {
         static void Main()
         {
-            ConnectFour game = new ConnectFour();
+            ConnectFour game = new();
             game.GameStart();
         }
     }
