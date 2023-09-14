@@ -28,19 +28,28 @@ namespace ConnectFour
         {
             this.players[currentPlayer].WritePlayer();
         }
+
         public void WriteNonActivePlayer()
         {
             int nonActivePlayer = GetOtherPlayer();
             this.players[nonActivePlayer].WritePlayer();
         }
+
         private int GetOtherPlayer()
         {
             return (this.currentPlayer + 1) % PlayerConstant.MAXIMUM_PLAYERS_NUMBER;
         }
+
         public void Play()
         {
             Console.WriteLine($"Player: {currentPlayer+1} with token: {(char)this.players[currentPlayer].token}");
             this.players[currentPlayer].Play();
+        }
+
+        public Token GetNonActivePlayerToken()
+        {
+            int nonActivePlayer = GetOtherPlayer();
+            return this.players[nonActivePlayer].token;
         }
     }
 }
