@@ -12,21 +12,23 @@ namespace ConnectFour
             this.board = new Board();
             this.turn = new Turn(board);
         }
-        public void GameStart()
+        public void Start()
         {
             Console.WriteLine("ConnectFour Game Started");
             do
             {
-                this.PlayGame();
+                this.Play();
             } while (!this.GameHasFinished());
+            Console.ReadLine();
         }
 
-        private void PlayGame()
+        private void Play()
         {
             this.PrintGameTable();
             this.turn.Play();
             this.turn.ChangeTurn();
         }
+
         private void PrintGameTable()
         {
             Console.WriteLine(new String('-',BoardConstant.BOARD_ROWS*3));
@@ -37,13 +39,14 @@ namespace ConnectFour
         public bool GameHasFinished()
         {
             bool gameHasFinished = false;
-            if (this.board.IsConnectedFour())
+            if (this.board.IsConnectedFour(this.turn.GetNonActivePlayerToken()))
             {
                 this.board.PrintBoard();
                 Console.WriteLine("The winner is: ");
                 this.turn.WriteNonActivePlayer();
                 gameHasFinished = true;
-            }else if (this.board.IsBoardComplete())
+            }
+            else if (this.board.IsBoardComplete())
             {
                 this.board.PrintBoard();
                 Console.WriteLine("The game has ended with a tie");
