@@ -51,5 +51,11 @@ namespace ConnectFour
             }
             return gameHasFinished;
         }
+
+        static void Main()
+        {
+            ConnectFour game = new();
+            game.GameStart();
+        }
     }
 }
