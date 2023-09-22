@@ -64,5 +64,9 @@ namespace ConnectFour
             }
             return columnNumber;
         }
+        public static void PrintSeparator()
+        {
+            Console.WriteLine(new String('-', BoardConstant.BOARD_COLUMNS * 3));
+        }
     }
 }

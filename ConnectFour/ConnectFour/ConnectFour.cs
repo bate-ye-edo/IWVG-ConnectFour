@@ -29,9 +29,9 @@ namespace ConnectFour
         }
         private void PrintGameTable()
         {
-            Console.WriteLine(new String('-',BoardConstant.BOARD_ROWS*3));
+            Message.PrintSeparator();
             this.board.PrintBoard();
-            Console.WriteLine(new String('-',BoardConstant.BOARD_ROWS*3));
+            Message.PrintSeparator();
         }
 
         public bool GameHasFinished()
