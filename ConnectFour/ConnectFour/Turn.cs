@@ -6,11 +6,12 @@ namespace ConnectFour
 {
     class Turn
     {
-        private readonly Player[] players = new Player[PlayerConstant.MAXIMUM_PLAYERS_NUMBER];
+        private readonly Player[] players;
         private readonly Board board;
         private int currentPlayer;
         public Turn(Board board)
         {
+            this.players = new Player[PlayerConstant.MAXIMUM_PLAYERS_NUMBER];
             this.board = board;
             for(int i = 0; i < PlayerConstant.MAXIMUM_PLAYERS_NUMBER; i++)
             {
