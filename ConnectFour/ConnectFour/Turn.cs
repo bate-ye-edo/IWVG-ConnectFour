@@ -1,21 +1,19 @@
-﻿using ConnectFour.Constants;
-using ConnectFour.Enums;
-using System;
+﻿using ConnectFour.Enums;
 
 namespace ConnectFour
 {
     class Turn
     {
-        private readonly Player[] players;
         private readonly Board board;
+        private readonly Player[] players;
         private int currentPlayer;
         public Turn(Board board)
         {
-            this.players = new Player[PlayerConstant.MAXIMUM_PLAYERS_NUMBER];
             this.board = board;
-            for(int i = 0; i < PlayerConstant.MAXIMUM_PLAYERS_NUMBER; i++)
+            this.players = new Player[Player.MAXIMUM_PLAYERS_NUMBER];
+            for(int i = 0; i < Player.MAXIMUM_PLAYERS_NUMBER; i++)
             {
-                this.players[i] = new Player(TokenMethod.GetTokenFromNumber(i),this.board);
+                this.players[i] = new Player(TokenExtension.GetTokenFromNumber(i),this.board);
             }
             this.currentPlayer = 0;
         }
@@ -23,6 +21,10 @@ namespace ConnectFour
         public void ChangeTurn()
         {
             this.currentPlayer = GetOtherPlayer();
+        }
+        private int GetOtherPlayer()
+        {
+            return (this.currentPlayer + 1) % Player.MAXIMUM_PLAYERS_NUMBER;
         }
 
         public void WriteActivePlayer()
@@ -33,10 +35,6 @@ namespace ConnectFour
         {
             int nonActivePlayer = GetOtherPlayer();
             this.players[nonActivePlayer].WritePlayer();
-        }
-        private int GetOtherPlayer()
-        {
-            return (this.currentPlayer + 1) % PlayerConstant.MAXIMUM_PLAYERS_NUMBER;
         }
         public void Play()
         {

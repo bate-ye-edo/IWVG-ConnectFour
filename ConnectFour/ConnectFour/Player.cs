@@ -1,11 +1,12 @@
-﻿using ConnectFour.Constants;
-using ConnectFour.Enums;
-using System;
+﻿using ConnectFour.Enums;
 
 namespace ConnectFour
 {
     class Player
     {
+        internal const int MAXIMUM_TOKEN_NUMBER = 21;
+        internal const int MAXIMUM_PLAYERS_NUMBER = 2;
+
         private readonly Board board;
         public Token Token { get; init; }
         private int tokensLeftCount;
@@ -13,15 +14,11 @@ namespace ConnectFour
         {
             this.board = board;
             this.Token = token;
-            this.tokensLeftCount = PlayerConstant.MAXIMUM_TOKEN_NUMBER;
+            this.tokensLeftCount = MAXIMUM_TOKEN_NUMBER;
         }
         private void PutToken(int columnNumber)
         {
-            if(this.tokensLeftCount == 0)
-            {
-                Message.WritePlayerNoTokenLeft(this.Token);
-                return;
-            }
+            Assertion.AssertTrue(this.tokensLeftCount == 0);
             this.board.PutToken(this.Token, columnNumber);
             this.tokensLeftCount -= 1;
         }

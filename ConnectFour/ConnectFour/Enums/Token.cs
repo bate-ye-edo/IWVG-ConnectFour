@@ -9,7 +9,7 @@ namespace ConnectFour.Enums
         YELLOW = 'Y',
         NULL = ' '
     }
-    internal static class TokenMethod
+    internal static class TokenExtension
     {
         internal static Token GetTokenFromNumber(int number){
             List<Token> tokens = Enum.GetValues<Token>().ToList();

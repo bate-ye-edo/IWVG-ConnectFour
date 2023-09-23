@@ -66,7 +66,20 @@ namespace ConnectFour
         }
         public static void PrintSeparator()
         {
-            Console.WriteLine(new String('-', BoardConstant.BOARD_COLUMNS * 3));
+            Console.WriteLine(new String('-', Board.BOARD_COLUMNS * 3));
+        }
+        public static void PrintBoard(Board board)
+        {
+            Message.PrintSeparator();
+            for (int row = 0; row < board.Tokens.Length; row++)
+            {
+                for (int column = 0; column < board.Tokens[row].Length; column++)
+                {
+                    Console.Write($"[{(char)board.Tokens[row][column]}]");
+                }
+                Console.Write("\n");
+            }
+            Message.PrintSeparator();
         }
     }
 }

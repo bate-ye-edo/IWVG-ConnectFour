@@ -1,6 +1,4 @@
-﻿using ConnectFour.Constants;
-using System;
-
+﻿
 namespace ConnectFour
 {
     class ConnectFour
@@ -17,21 +15,15 @@ namespace ConnectFour
             Message.WriteGameStarted();
             do
             {
-                this.PlayGame();
+                this.Play();
             } while (!this.GameHasFinished());
         }
 
-        private void PlayGame()
+        private void Play()
         {
-            this.PrintGameTable();
+            Message.PrintBoard(this.board);
             this.turn.Play();
             this.turn.ChangeTurn();
-        }
-        private void PrintGameTable()
-        {
-            Message.PrintSeparator();
-            this.board.PrintBoard();
-            Message.PrintSeparator();
         }
 
         public bool GameHasFinished()
@@ -39,13 +31,13 @@ namespace ConnectFour
             bool gameHasFinished = false;
             if (this.board.IsConnectedFour())
             {
-                this.board.PrintBoard();
+                Message.PrintBoard(this.board);
                 Message.WriteWinnerTitle();
                 this.turn.WriteNonActivePlayer();
                 gameHasFinished = true;
             }else if (this.board.IsBoardComplete())
             {
-                this.board.PrintBoard();
+                Message.PrintBoard(this.board);
                 Message.WriteGameTie();
                 gameHasFinished = true;
             }
