@@ -12,5 +12,6 @@ namespace ConnectFour.Constants
         internal const string INSERT_COLUMN_NUMBER = "Please, insert a column number to insert a token: ";
         internal const string INSERT_VALID_COLUMN_NUMBER = "Please, insert VALID a column number to insert a token: ";
         internal const string PLAYER_INFO = "Player with token: {0}";
+        internal const string CAN_NOT_INSERT_INTO_COLUMN= "The column {0} does not accept more tokens, please retry another column.";
     }
 }

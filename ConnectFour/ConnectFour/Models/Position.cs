@@ -1,4 +1,4 @@
-﻿namespace ConnectFour
+﻿namespace ConnectFour.Models
 {
     class Position
     {

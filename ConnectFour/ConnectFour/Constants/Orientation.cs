@@ -1,4 +1,4 @@
-﻿
+﻿using ConnectFour.Models;
 namespace ConnectFour.Constants
 {
     internal static class Orientation

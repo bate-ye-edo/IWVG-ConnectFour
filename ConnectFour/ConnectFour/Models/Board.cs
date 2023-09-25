@@ -1,7 +1,8 @@
 ﻿using ConnectFour.Constants;
 using ConnectFour.Enums;
+using ConnectFour.Utils;
 
-namespace ConnectFour
+namespace ConnectFour.Models
 {
     class Board
     {
@@ -53,6 +54,20 @@ namespace ConnectFour
             }
             return emptyRow;
         }
+        private bool CheckIfLineHasConnectedFour(Position createLineDirection, Position slideDirection)
+        {
+            Line line = CreateLine(createLineDirection);
+            Position currentCoordinate = new(lastTokenPosition);
+            currentCoordinate.SumOtherPosition(slideDirection);
+            bool isConnectedFour = line.AreAllTokensEqualsAndNotNull();
+            while (!isConnectedFour && this.IsValidCoordinate(currentCoordinate))
+            {
+                line.SlideLineWithOneToken(this.Tokens[currentCoordinate.Row][currentCoordinate.Column]);
+                currentCoordinate.SumOtherPosition(slideDirection);
+                isConnectedFour = line.AreAllTokensEqualsAndNotNull();
+            }
+            return isConnectedFour;
+        }
 
         private Line CreateLine(Position orientation)
         {
@@ -69,24 +84,11 @@ namespace ConnectFour
         }
         private bool IsValidCoordinate(Position coordinate)
         {
-            bool isXValid = coordinate.Row >= 0 && coordinate.Row < BOARD_ROWS;
-            bool isYValid = coordinate.Column >= 0 && coordinate.Column < BOARD_COLUMNS;
-            return isXValid && isYValid;
+            bool isRowValid = coordinate.Row >= 0 && coordinate.Row < BOARD_ROWS;
+            bool isColumnValid = coordinate.Column >= 0 && coordinate.Column < BOARD_COLUMNS;
+            return isRowValid && isColumnValid;
         }
-        private bool CheckIfLineHasConnectedFour(Position createLineOrientation, Position slideOrientation)
-        {
-            Line line = CreateLine(createLineOrientation);
-            Position currentCoordinate = new(lastTokenPosition);
-            currentCoordinate.SumOtherPosition(slideOrientation);
-            bool isConnectedFour = line.IsAllElementTheSameInLine();
-            while (!isConnectedFour && this.IsValidCoordinate(currentCoordinate))
-            {
-                line.SlideLineWithOneToken(this.Tokens[currentCoordinate.Row][currentCoordinate.Column]);
-                currentCoordinate.SumOtherPosition(slideOrientation);
-                isConnectedFour = line.IsAllElementTheSameInLine();
-            }
-            return isConnectedFour;
-        }
+        
         private bool IsHorizontalConnectedFour()
         {
             return this.CheckIfLineHasConnectedFour(Orientation.EAST, Orientation.WEST);
@@ -95,7 +97,6 @@ namespace ConnectFour
         {
             return this.CheckIfLineHasConnectedFour(Orientation.SOUTH, Orientation.NORTH);
         }
-
         private bool IsDiagonalConnectedFour()
         {
             return this.CheckIfLineHasConnectedFour(Orientation.SOUTHEAST, Orientation.NORTHWEST);
@@ -108,6 +109,7 @@ namespace ConnectFour
         {
             return IsHorizontalConnectedFour() || IsVerticalConnectedFour() || IsDiagonalConnectedFour() || IsInvertedDiagonalConnectedFour();
         }
+
         public bool IsBoardComplete()
         {
             bool boardComplete = true;

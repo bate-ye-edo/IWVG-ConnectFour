@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ConnectFour
+namespace ConnectFour.Utils
 {
     static class Assertion
     {

@@ -1,8 +1,9 @@
 ﻿using ConnectFour.Enums;
+using ConnectFour.Utils;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace ConnectFour
+namespace ConnectFour.Models
 {
     class Line
     {
@@ -25,7 +26,7 @@ namespace ConnectFour
             }
             this.tokens.Insert(0, token);
         }
-        public bool IsAllElementTheSameInLine()
+        public bool AreAllTokensEqualsAndNotNull()
         {
             if(this.tokens.Count < Board.WIN_NUMBER)
             {

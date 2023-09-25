@@ -1,6 +1,6 @@
 ﻿using ConnectFour.Enums;
 
-namespace ConnectFour
+namespace ConnectFour.Models
 {
     class Turn
     {
@@ -20,26 +20,24 @@ namespace ConnectFour
 
         public void ChangeTurn()
         {
-            this.currentPlayer = GetOtherPlayer();
+            this.currentPlayer = GetOtherPlayerIndex();
         }
-        private int GetOtherPlayer()
+        private int GetOtherPlayerIndex()
         {
             return (this.currentPlayer + 1) % Player.MAXIMUM_PLAYERS_NUMBER;
         }
+        public Player GetNonActivePlayer()
+        {
+            return this.players[this.GetOtherPlayerIndex()];
+        }
+        public Player GetActivePlayer()
+        {
+            return this.players[this.currentPlayer];
+        }
 
-        public void WriteActivePlayer()
+        public void PutToken(int columnNumber)
         {
-            this.players[currentPlayer].WritePlayer();
-        }
-        public void WriteNonActivePlayer()
-        {
-            int nonActivePlayer = GetOtherPlayer();
-            this.players[nonActivePlayer].WritePlayer();
-        }
-        public void Play()
-        {
-            Message.WritePlayerDescription(this.players[currentPlayer], currentPlayer+1);
-            this.players[currentPlayer].Play();
+            this.players[currentPlayer].PutToken(columnNumber);
         }
     }
 }
