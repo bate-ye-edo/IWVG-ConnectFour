@@ -37,5 +37,9 @@ namespace ConnectFour.Models
             bool allTokensAreEqual = this.tokens.All(token => token == firstToken);
             return !lineHasSomeNullTokens && allTokensAreEqual;
         }
+        public int GetInsertedTokensCount()
+        {
+            return this.tokens.Count;
+        }
     }
 }

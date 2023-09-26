@@ -11,15 +11,14 @@ namespace ConnectFour.Views
         }  
         public int ReadColumnNumber()
         {
-            Message.WriteInsertColumnNumber();
-            string columnString = Console.ReadLine();
-            bool isNumber = int.TryParse(columnString, out int columnNumber);
-            while (!isNumber)
+            int columnNumber;
+            bool isNumber;
+            do
             {
-                Message.WriteInsertValidColumnNumber();
-                columnString = Console.ReadLine();
+                Message.WriteInsertColumnNumber();
+                string columnString = Console.ReadLine();
                 isNumber = int.TryParse(columnString, out columnNumber);
-            }
+            } while (!isNumber);
             return columnNumber;
         }
         public bool CanInsertIntoColumn(int columnNumber)

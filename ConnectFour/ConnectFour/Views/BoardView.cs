@@ -15,7 +15,7 @@ namespace ConnectFour.Views
                 {
                     Console.Write($"[{(char)tokens[row][column]}]");
                 }
-                Console.Write("\n");
+                Console.WriteLine();
             }
             Message.PrintSeparator();
         }

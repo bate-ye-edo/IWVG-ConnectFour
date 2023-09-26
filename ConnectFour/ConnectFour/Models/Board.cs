@@ -60,7 +60,7 @@ namespace ConnectFour.Models
             Position currentCoordinate = new(lastTokenPosition);
             currentCoordinate.SumOtherPosition(slideDirection);
             bool isConnectedFour = line.AreAllTokensEqualsAndNotNull();
-            while (!isConnectedFour && this.IsValidCoordinate(currentCoordinate))
+            while (!isConnectedFour && Board.IsValidCoordinate(currentCoordinate))
             {
                 line.SlideLineWithOneToken(this.Tokens[currentCoordinate.Row][currentCoordinate.Column]);
                 currentCoordinate.SumOtherPosition(slideDirection);
@@ -72,17 +72,15 @@ namespace ConnectFour.Models
         private Line CreateLine(Position orientation)
         {
             Line line = new();
-            int tokensInsertedToLine = 0;
             Position currentCoordinate = new(lastTokenPosition);
-            while (this.IsValidCoordinate(currentCoordinate) && tokensInsertedToLine < WIN_NUMBER)
+            while (Board.IsValidCoordinate(currentCoordinate) && line.GetInsertedTokensCount() < WIN_NUMBER)
             {
                 line.AddToken(this.Tokens[currentCoordinate.Row][currentCoordinate.Column]);
                 currentCoordinate.SumOtherPosition(orientation);
-                tokensInsertedToLine++;
             }
             return line;
         }
-        private bool IsValidCoordinate(Position coordinate)
+        private static bool IsValidCoordinate(Position coordinate)
         {
             bool isRowValid = coordinate.Row >= 0 && coordinate.Row < BOARD_ROWS;
             bool isColumnValid = coordinate.Column >= 0 && coordinate.Column < BOARD_COLUMNS;
