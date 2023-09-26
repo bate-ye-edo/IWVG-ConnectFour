@@ -1,0 +1,18 @@
+@startuml
+
+package ConnectFour {
+  class ConnectFour{
+    - readonly Game game;
+    - readonly View view;
+    + ConnectFour();
+    + Play();
+    + Main();
+  }
+}
+
+class ConnectFour.Models.Game{}
+class ConnectFour.Views.View{}
+ConnectFour.ConnectFour *-down-> View
+ConnectFour.ConnectFour *-down-> Game
+
+@enduml

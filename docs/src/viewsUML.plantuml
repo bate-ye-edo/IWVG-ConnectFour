@@ -1,0 +1,75 @@
+@startuml
+
+package Views{
+ class View{
+   - readonly StartView startView;
+   - readonly PlayView playView;
+   + View(Game game);
+   + void Start();
+   + void Play();
+ }
+ abstract class WithGameView{
+   ~ readonly Game game;
+   + WithGameView(Game game);
+   + abstract void Interact();
+ }
+ class PlayView{
+   + PlayView(Game game): base(game) { }
+   + override void Interact();
+   - void PrintWinnerOrTie();
+ }
+ class StartView{
+   + StartView(Game game);
+   + override void Interact();
+ }
+ class PlayerView{
+  + PlayerView(Game game);
+  + override void Interact();
+ }
+ class InsertTokenView{
+  - readonly Game game;
+  + InsertTokenView(Game game);
+  + int ReadColumnNumber();
+  + bool CanInsertIntoColumn(int columnNumber);
+ }
+ class BoardView{
+  + void Write(Game game);
+ }
+ class Message{
+  - static void WriteLine(string str);
+  + static void WriteGameStarted();
+  + static void WriteWinnerTitle();
+  + static void WriteGameTie();
+  + static void WriteInsertColumnNumber();
+  + static void WriteInsertValidColumnNumber();
+  + static void WriteCanNotInsertIntoSelectedColumn(int columnNumber);
+  + static void WritePlayerWithToken(Player player);
+  - static void WriteStringWithParams(string str, params object[] parameters);
+  + static void PrintSeparator();
+ }
+ 
+ WithGameView <|-- StartView
+ WithGameView <|-- PlayerView
+ WithGameView <|-- PlayView
+ View *--> StartView
+ View *--> PlayView
+ PlayView ..> PlayerView
+ PlayView ..> BoardView
+ StartView ..> BoardView
+ PlayerView ..> InsertTokenView
+ PlayerView ..> Message
+ PlayView ..> Message
+ StartView ..> Message
+ InsertTokenView ..> Message
+ BoardView ..> Message
+}
+
+package Models{
+  class Game{}
+}
+package Enums{
+  enum Token{}
+}
+Views.WithGameView *-left-> Models.Game
+Views.BoardView ..> Enums.Token
+@enduml

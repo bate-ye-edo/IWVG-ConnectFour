@@ -16,7 +16,7 @@ namespace ConnectFour.Views
             } while (!this.game.IsConnectedFour());
             this.PrintWinnerOrTie();
         }
-        public void PrintWinnerOrTie()
+        private void PrintWinnerOrTie()
         {
             new BoardView().Write(this.game);
             if (this.game.IsConnectedFour())

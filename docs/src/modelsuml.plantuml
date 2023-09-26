@@ -1,0 +1,115 @@
+@startuml
+
+package Models{
+  class Game{
+    - readonly Board board;
+    - readonly Turn turn;
+    + Game();
+    + Token[][] GetBoardTokens();
+    + bool IsConnectedFour();
+    + bool IsBoardComplete();
+    + Player GetNonActivePlayer();
+    + Player GetActivePlayer();
+    + void Next();
+    + void PutToken(int columnNumber);
+    + bool CanInsertIntoColumn(int columnNumber);
+  }
+  class Turn{
+    - readonly Board board;
+    - readonly Player[] players;
+    - int currentPlayer;
+    + Turn();
+    + void ChangeTurn();
+    - int GetOtherPlayerIndex();
+    + Player GetNonActivePlayer();
+    + Player GetActivePlayer();
+    + void PutToken(int columnNumber);
+  }
+  class Player{
+    ~ const int MAXIMUM_TOKEN_NUMBER = 21;
+    ~ const int MAXIMUM_PLAYERS_NUMBER = 2;
+    - Board board;
+    + readonly Token Token;
+    - int tokensLeftCount;
+    + Player(Token token, Board board);
+    + PutToken(int columnNumber);
+  }
+  class Board{
+    ~ const int BOARD_COLUMNS = 7;
+    ~ const int BOARD_ROWS = 6;
+    ~ const int WIN_NUMBER = 4;
+    + readonly Token[][] Tokens;
+    - readonly Position lastTokenPosition;
+    + Board();
+    - void InitializeBoardColumns();
+    + void PutToken(Token token, int columnNumber);
+    ~ bool CanInsertIntoColumn(int columnNumber);
+    - int GetFirstEmptyRowInColumn(int columnNumber);
+    - bool CheckIfLineHasConnectedFour(Position createLineDirection, Position slideDirection);
+    - Line CreateLine(Position orientation);
+    - static bool IsValidCoordinate(Position coordinate);
+    - bool IsHorizontalConnectedFour();
+    - bool IsVerticalConnectedFour();
+    - bool IsDiagonalConnectedFour();
+    - bool IsInvertedDiagonalConnectedFour();
+    + bool IsConnectedFour();
+    + bool IsBoardComplete();
+  }
+  class Line{
+    - readonly List<Token> tokens;
+    + Line();
+    + void AddToken(Token token);
+    + void SlideLineWithOneToken(Token token);
+    + bool AreAllTokensEqualsAndNotNull();
+    + int GetInsertedTokensCount();
+  }
+  class Position{
+    + int Row;
+    + int Column;
+    + Position(int row, int column);
+    + Position();
+    + Position(Position other);
+    + void SumOtherPosition(Position other);
+  }
+  Game *-->Board
+  Game *-->Turn
+  Turn *-down-> Board
+  Turn *-down-> "2" Player
+  Player *-down-> Board
+  Board -->Line
+  Board *--> Position
+}
+package Enums{
+  enum Token{
+    + RED;
+    + YELLOW; 
+    + NULL;
+  }
+  static class TokenExtension{
+    ~ static Token GetTokenFromNumber(int number);
+  }
+  TokenExtension ..> Token
+}
+package Constants{
+  static class Orientation{
+    ~ static Position NORTH = new(-1, 0);
+    ~ static Position SOUTH = new(1, 0);
+    ~ static Position EAST = new(0, 1);
+    ~ static Position WEST = new(0, -1);
+    ~ static Position NORTHEAST = new(-1, 1);
+    ~ static Position NORTHWEST = new(-1, -1);
+    ~ static Position SOUTHEAST = new(1, 1);
+    ~ static Position SOUTHWEST = new(1, -1);
+  }
+}
+
+Models.Game ..> Enums.Token
+Models.Board *--> Enums.Token
+Models.Board ..> Constants.Orientation
+Models.Turn ..> Enums.TokenExtension
+Models.Player *--> Token
+Models.Line o-down-> Enums.Token
+Constants.Orientation *--> Models.Position
+
+
+@enduml
