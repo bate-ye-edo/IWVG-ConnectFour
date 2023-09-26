@@ -57,13 +57,13 @@ namespace ConnectFour.Models
         private bool CheckIfLineHasConnectedFour(Position createLineDirection, Position slideDirection)
         {
             Line line = CreateLine(createLineDirection);
-            Position currentCoordinate = new(lastTokenPosition);
-            currentCoordinate.SumOtherPosition(slideDirection);
+            Position currentPosition = new(lastTokenPosition);
+            currentPosition.SumOtherPosition(slideDirection);
             bool isConnectedFour = line.AreAllTokensEqualsAndNotNull();
-            while (!isConnectedFour && Board.IsValidCoordinate(currentCoordinate))
+            while (!isConnectedFour && Board.IsValidPosition(currentPosition))
             {
-                line.SlideLineWithOneToken(this.Tokens[currentCoordinate.Row][currentCoordinate.Column]);
-                currentCoordinate.SumOtherPosition(slideDirection);
+                line.SlideLineWithOneToken(this.Tokens[currentPosition.Row][currentPosition.Column]);
+                currentPosition.SumOtherPosition(slideDirection);
                 isConnectedFour = line.AreAllTokensEqualsAndNotNull();
             }
             return isConnectedFour;
@@ -72,18 +72,18 @@ namespace ConnectFour.Models
         private Line CreateLine(Position orientation)
         {
             Line line = new();
-            Position currentCoordinate = new(lastTokenPosition);
-            while (Board.IsValidCoordinate(currentCoordinate) && line.GetInsertedTokensCount() < WIN_NUMBER)
+            Position currentPosition = new(lastTokenPosition);
+            while (Board.IsValidPosition(currentPosition) && line.GetInsertedTokensCount() < WIN_NUMBER)
             {
-                line.AddToken(this.Tokens[currentCoordinate.Row][currentCoordinate.Column]);
-                currentCoordinate.SumOtherPosition(orientation);
+                line.AddToken(this.Tokens[currentPosition.Row][currentPosition.Column]);
+                currentPosition.SumOtherPosition(orientation);
             }
             return line;
         }
-        private static bool IsValidCoordinate(Position coordinate)
+        private static bool IsValidPosition(Position position)
         {
-            bool isRowValid = coordinate.Row >= 0 && coordinate.Row < BOARD_ROWS;
-            bool isColumnValid = coordinate.Column >= 0 && coordinate.Column < BOARD_COLUMNS;
+            bool isRowValid = position.Row >= 0 && position.Row < BOARD_ROWS;
+            bool isColumnValid = position.Column >= 0 && position.Column < BOARD_COLUMNS;
             return isRowValid && isColumnValid;
         }
         
