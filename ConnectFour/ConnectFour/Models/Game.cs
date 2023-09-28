@@ -46,7 +46,6 @@ namespace ConnectFour.Models
 
         public void PutToken(int columnNumber) 
         {
-            Assertion.AssertTrue(columnNumber > 0 && columnNumber <= Board.BOARD_COLUMNS);
             this.turn.PutToken(columnNumber);
         }
 

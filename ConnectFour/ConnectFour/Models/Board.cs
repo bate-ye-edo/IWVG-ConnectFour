@@ -6,7 +6,7 @@ namespace ConnectFour.Models
 {
     class Board
     {
-        public const int BOARD_COLUMNS = 7;
+        internal const int BOARD_COLUMNS = 7;
         internal const int BOARD_ROWS = 6;
         internal const int WIN_NUMBER = 4;
 
