@@ -8,13 +8,15 @@ namespace ConnectFour.Views
 
         public View(Game game)
         {
-            this.startView = new(game);
-            this.playView = new(game);
+            this.startView = new StartView(game);
+            this.playView = new PlayView(game);
         }
+
         public void Start()
         {
             this.startView.Interact();
         }
+
         public void Play()
         {
             this.playView.Interact();

@@ -6,7 +6,7 @@ namespace ConnectFour.Utils
     {
         public static void AssertTrue(bool assert)
         {
-            if (assert)
+            if (!assert)
             {
                 throw new InvalidOperationException();
             }

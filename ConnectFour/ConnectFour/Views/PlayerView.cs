@@ -1,14 +1,15 @@
 ﻿using ConnectFour.Models;
 namespace ConnectFour.Views
 {
-    class PlayerView: WithGameView
+    class PlayerView : WithGameView
     {
-        public PlayerView(Game game): base(game) {}
+        public PlayerView(Game game) : base(game) {}
 
         public override void Interact()
         {
             int columnNumber;
             bool canInsertIntoColumn;
+
             do
             {
                 InsertTokenView insertTokenView = new(this.game);
@@ -16,6 +17,7 @@ namespace ConnectFour.Views
                 columnNumber = insertTokenView.ReadColumnNumber();
                 canInsertIntoColumn = insertTokenView.CanInsertIntoColumn(columnNumber);
             } while (!canInsertIntoColumn);
+
             this.game.PutToken(columnNumber);
         }
         

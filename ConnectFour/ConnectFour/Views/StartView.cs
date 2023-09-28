@@ -2,9 +2,10 @@
 
 namespace ConnectFour.Views
 {
-    class StartView: WithGameView
+    class StartView : WithGameView
     {
         public StartView(Game game) : base(game) { }
+
         public override void Interact()
         {
             Message.WriteGameStarted();

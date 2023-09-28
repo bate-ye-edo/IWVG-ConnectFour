@@ -1,10 +1,11 @@
-﻿using ConnectFour.Models;
+﻿using System;
+using ConnectFour.Models;
 
 namespace ConnectFour.Views
 {
-    class PlayView: WithGameView
+    class PlayView : WithGameView
     {
-        public PlayView(Game game): base(game) { }
+        public PlayView(Game game) : base(game) { }
 
         public override void Interact()
         {
@@ -14,11 +15,13 @@ namespace ConnectFour.Views
                 this.game.Next();
                 new BoardView().Write(this.game);
             } while (!this.game.IsConnectedFour());
+
             this.PrintWinnerOrTie();
         }
         private void PrintWinnerOrTie()
         {
             new BoardView().Write(this.game);
+
             if (this.game.IsConnectedFour())
             {
                 Message.WriteWinnerTitle();
@@ -28,6 +31,8 @@ namespace ConnectFour.Views
             {
                 Message.WriteGameTie();
             }
+
+            Console.ReadLine();
         }
     }
 }
